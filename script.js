@@ -14,7 +14,7 @@ document.getElementById('marketForm').addEventListener('submit', async function(
     downloadButton.style.display = 'none';
     
     try {
-        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        const proxyUrl = 'https://proxy.cors.sh/';
         const apiUrl = `${proxyUrl}https://api.live.app.obi.de/v1/stores/${marktNumber}?country=${email.slice(-2)}`;
         
         const options = {
