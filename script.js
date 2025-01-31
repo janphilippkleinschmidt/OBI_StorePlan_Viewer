@@ -14,8 +14,8 @@ document.getElementById('marketForm').addEventListener('submit', async function(
     downloadButton.style.display = 'none';
     
     try {
-        // Hier müssten Sie Ihre API-URL einsetzen
-        apiUrl = `https://api.live.app.obi.de/v1/stores/${marktNumber}?country=${email.slice(-2)}`;
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        const apiUrl = `${proxyUrl}https://api.live.app.obi.de/v1/stores/${marktNumber}?country=${email.slice(-2)}`;
         
         const options = {
             method: 'GET',
@@ -38,6 +38,12 @@ document.getElementById('marketForm').addEventListener('submit', async function(
         // Use direct SVG injection instead of blob URL
         storeImage.innerHTML = svgText;
         imageContainer.style.display = 'block';
+
+        // In neuem Tab öffnen
+        const blob = new Blob([svgText], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const newTab = window.open(url, '_blank');
+        newTab.focus();
         
         // Download Button Code hier einfügen
         downloadButton.style.display = 'block';
