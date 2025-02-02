@@ -3,15 +3,12 @@ document.getElementById('marketForm').addEventListener('submit', async function(
     const marktNumber = document.getElementById('marktNumber').value;
     const email = document.getElementById('email').value;
     const errorDiv = document.getElementById('error-message');
-    const imageContainer = document.getElementById('image-container');
-    const storeImage = document.getElementById('storeImage');
     const downloadButton = document.getElementById('downloadButton');
     const submitButton = document.querySelector('#marketForm button[type="submit"]');
     
     // Reset previous states
     errorDiv.style.display = 'none';
-    imageContainer.style.display = 'none';
-    downloadButton.style.display = 'none'; // Reset download button
+    downloadButton.style.display = 'none';
 
     // Add loading spinner
     const spinner = document.createElement('span');
@@ -54,6 +51,7 @@ document.getElementById('marketForm').addEventListener('submit', async function(
             `;
         };
 
+
         // Helper function to get complete section content including children
         const getCompleteSectionContent = (section) => {
             const serializer = new XMLSerializer();
@@ -61,8 +59,17 @@ document.getElementById('marketForm').addEventListener('submit', async function(
             return sectionContent;
         };
 
-        // Handle sections
+        // if store has multiple storeys 
         if (section1 && section0) {
+            const existingViewButtons = document.querySelectorAll('.view-buttons-container');
+            existingViewButtons.forEach(button => button.remove());
+            // Remove existing display:none from HTML
+            document.querySelector('.download-options').removeAttribute('style');
+            document.getElementById('downloadButton').removeAttribute('style');
+
+            // Then show both elements
+            document.querySelector('.download-options').style.display = 'block';
+            document.getElementById('downloadButton').style.display = 'block';
             // Get complete content for each section including all children
             const section1Content = getCompleteSectionContent(section1);
             const section0Content = getCompleteSectionContent(section0);
@@ -73,22 +80,29 @@ document.getElementById('marketForm').addEventListener('submit', async function(
 
             const blob1 = new Blob([section1SVG], { type: 'text/html' });
             const url1 = URL.createObjectURL(blob1);
-            const newTab1 = window.open(url1, 'section_1');
-            if (newTab1) {
-                newTab1.focus();
-            }
 
             const blob0 = new Blob([section0SVG], { type: 'text/html' });
             const url0 = URL.createObjectURL(blob0);
-            const newTab0 = window.open(url0, 'section_0');
-            if (newTab0) {
-                newTab0.focus();
-            }
 
-            // Update download button
-            downloadButton.style.display = 'block'; // Make button visible
-            downloadButton.style.visibility = 'visible'; // Ensure button is visible
-            downloadButton.style.opacity = '1'; // Ensure button is fully opaque
+            // Add view buttons
+            const viewButtonsContainer = document.createElement('div');
+            viewButtonsContainer.className = 'view-buttons-container';
+            viewButtonsContainer.innerHTML = `
+                <button id="viewSection1" class="view-btn">Obergeschoss anzeigen</button>
+                <button id="viewSection0" class="view-btn">Erdgeschoss anzeigen</button>
+            `;
+            
+            document.querySelector('.download-options').before(viewButtonsContainer);
+            
+            // Add event listeners for view buttons
+            document.getElementById('viewSection1').addEventListener('click', () => {
+                window.open(url1, '_blank');
+            });
+            
+            document.getElementById('viewSection0').addEventListener('click', () => {
+                window.open(url0, '_blank');
+            });
+            
 
             downloadButton.onclick = () => {
                 const downloadSection = (sectionId, sectionContent) => {
@@ -97,7 +111,7 @@ document.getElementById('marketForm').addEventListener('submit', async function(
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = `store-${marktNumber}-section-${sectionId}.html`;
+                    a.download = `Markplan-${marktNumber}-Etage-${sectionId}.html`;
                     a.click();
                     URL.revokeObjectURL(url);
                 };
@@ -105,17 +119,49 @@ document.getElementById('marketForm').addEventListener('submit', async function(
                 downloadSection('1', section1Content);
                 downloadSection('0', section0Content);
             };
-        } else {
-            // Fallback to original behavior if sections not found
-            storeImage.innerHTML = svgText;
-            imageContainer.style.display = 'block';
+        } else { //if store has one storey
+
+            const existingViewButtons = document.querySelectorAll('.view-buttons-container');
+            existingViewButtons.forEach(button => button.remove());
+                        
+            // Remove existing display:none from HTML
+            document.querySelector('.download-options').removeAttribute('style');
+            document.getElementById('downloadButton').removeAttribute('style');
             
+            // Then show both elements
+            document.querySelector('.download-options').style.display = 'block';
+            document.getElementById('downloadButton').style.display = 'block';
+            
+            // Create blob for single view
             const blob = new Blob([svgText], { type: 'text/html' });
             const url = URL.createObjectURL(blob);
-            const newTab = window.open(url, '_blank');
-            if (newTab) {
-                newTab.focus();
-            }
+            
+            // Add view button
+            const viewButtonsContainer = document.createElement('div');
+            viewButtonsContainer.className = 'view-buttons-container';
+            viewButtonsContainer.innerHTML = `
+                <button id="viewPlan" class="view-btn">Markplan anzeigen</button>
+            `;
+            
+            document.querySelector('.download-options').before(viewButtonsContainer);
+            
+            // Add event listener for view button
+            document.getElementById('viewPlan').addEventListener('click', () => {
+                window.open(url, '_blank');
+            });
+            
+            downloadButton.onclick = () => {
+                const downloadFile = () => {
+                    const blob = new Blob([svgText], { type: 'text/html' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `Markplan-${marktNumber}.html`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                };
+                downloadFile();
+            };
         }
 
     } catch (error) {
