@@ -20,6 +20,7 @@ document.getElementById('marketForm').addEventListener('submit', async function(
         
         const statusStep = document.createElement('div');
         statusStep.className = `status-step status-${type}`;
+        console.log(message);
         
         switch(type) {
             case 'success':
@@ -59,7 +60,8 @@ document.getElementById('marketForm').addEventListener('submit', async function(
         const options = {
             method: 'GET',
             headers: {
-                'Accept': 'image/vnd.obi.companion.store.svg+xml;version=1'
+                'Accept': 'image/vnd.obi.companion.store.svg+xml;version=1',
+                'x-cors-api-key': proxyApiKey
             },
         };
         
