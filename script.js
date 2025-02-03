@@ -5,7 +5,17 @@ document.getElementById('marketForm').addEventListener('submit', async function(
     const errorDiv = document.getElementById('error-message');
     const downloadButton = document.getElementById('downloadButton');
     const submitButton = document.querySelector('#marketForm button[type="submit"]');
-
+    
+    //const proxyApiKey = 'temp_9514f88443496c1b6dcb49cc651b3aa4' || process.env.PROXY_API_KEY;
+    // Get API key from environment variable with fallback
+    const proxyApiKey = 'temp_9514f88443496c1b6dcb49cc651b3aa4' || process.env.PROXY_API_KEY;
+    if (!proxyApiKey) {
+        errorDiv.textContent = 'API-Konfiguration fehlgeschlagen. Bitte kontaktieren Sie den Administrator.';
+        errorDiv.style.display = 'block';
+        return;
+    }
+    
+    const proxyUrl = 'https://proxy.cors.sh/';
     const baseURL = 'https://api.live.app.obi.de/v1/stores/';
     
     // Reset previous states
@@ -18,13 +28,13 @@ document.getElementById('marketForm').addEventListener('submit', async function(
     submitButton.parentNode.insertBefore(spinner, submitButton.nextSibling);
 
     try {
-        const proxyUrl = 'https://proxy.cors.sh/';
         const apiUrl = `${proxyUrl}${baseURL}${marktNumber}?country=${email.slice(-2)}`;
         
         const options = {
             method: 'GET',
             headers: {
                 'Accept': 'image/vnd.obi.companion.store.svg+xml;version=1',
+                'x-cors-api-key': proxyApiKey
             },
         };
 
@@ -169,8 +179,15 @@ document.getElementById('marketForm').addEventListener('submit', async function(
         }
 
     } catch (error) {
-        errorDiv.textContent = `Fehler: ${error.message}`;
+        errorDiv.textContent = `Fehler: ${error.message} Bitte probiere es später noch einmal`;
         errorDiv.style.display = 'block';
+
+        // Log error details for debugging
+        console.error('Request failed:', {
+            status: error.status,
+            message: error.message,
+            url: error.url
+        });
     } finally {
         spinner.remove();
     }
