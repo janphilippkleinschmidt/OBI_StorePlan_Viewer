@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="logo-container">
+        <img src="assets/OBI_Storeplan-Viewer_Logo.png" alt="OBI Storeplan Viewer Logo" id="site-logo">
+    </div>    
     <div class="container">
     <form id="marketForm">
         <div class="form-group">
@@ -19,14 +22,15 @@
             <input type="email" id="email" name="email" required pattern="^[^@]+@(?:obi\.)?(?:de|at)$">
         </div>
         <div class="button-container">
-            <button type="submit">Absenden</button>
-            <span class="loading-spinner" style="display: none;"></span>
+            <button type="submit" id="submitbutton">Daten Absenden </button>
         </div>
         <div class="download-options" style="display: none;">
-            <button type="button" id="downloadButton" class="download-btn">Herunterladen</button>
+            <button type="button" id="downloadButton" class="download-btn">Marktplan Herunterladen</button>
         </div>
     </form>
-    <div id="error-message"></div>
+    <div id="status-message" class="status-message">
+        <div class="status-content"></div>
+    </div>
 </div>
     <script src="script.js"></script>
 </body>
