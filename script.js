@@ -199,7 +199,7 @@ document.getElementById('marketForm').addEventListener('submit', async function(
 
             const sectionContent = getCompleteSectionContent(doc);
 
-            const sectionSVG = createSectionSVG(sectionContent);
+            const sectionSVG = createSectionSVG('0',sectionContent);
             
             const blob = new Blob([sectionSVG], { type: 'text/html' });
             const url = URL.createObjectURL(blob);
@@ -221,7 +221,7 @@ document.getElementById('marketForm').addEventListener('submit', async function(
             updateStatus('Konfiguriere Download-Funktion...');
             downloadButton.onclick = () => {
                 const downloadFile = () => {
-                    const blob = new Blob([svgText], { type: 'text/html' });
+                    const blob = new Blob([sectionSVG], { type: 'text/html' });
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
