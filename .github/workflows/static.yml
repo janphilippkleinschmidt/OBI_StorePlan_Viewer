@@ -5,6 +5,10 @@ on:
     branches: ["main"]
   workflow_dispatch:
 
+env:
+  PROXY_API_KEY: ${{ vars.PROXY_API_KEY }}
+  OBI_API: ${{ vars.OBI_API }}
+
 permissions:
   contents: read
   pages: write
@@ -20,12 +24,15 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    env:
-      PROXY_API_KEY: ${{ vars.PROXY_API_KEY }}
-      OBI_API: ${{ vars.OBI_API }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Replace placeholder with OBIAPI
+        run: |
+          sed -i "s/{{ OBI_API }}/$OBI_API/g" script.js
+      - name: Replace placeholder with PROXYAPIKEY
+        run: |
+          sed -i "s/{{ PROXY_API_KEY }}/$PROXY_API_KEY/g" script.js
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
