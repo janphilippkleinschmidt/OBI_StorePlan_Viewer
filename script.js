@@ -6,8 +6,8 @@ document.getElementById('marketForm').addEventListener('submit', async function(
     const downloadButton = document.getElementById('downloadButton');
     const submitButton = document.querySelector('#marketForm button[type="submit"]');
     const submitButtonElement = document.getElementById('submitbutton');
-    const PROXY_API_KEY = "{{ PROXY_API_KEY }}"; //temp_9514f88443496c1b6dcb49cc651b3aa4
-    const OBI_URL = "{{ OBI_API }}"; //https://api.live.app.obi.de/v1/stores/
+    const PROXY_API_KEY = "{{ PROXY_API_KEY }}" || process.env.PROXY_API_KEY; //temp_9514f88443496c1b6dcb49cc651b3aa4
+    const OBI_URL = "{{ OBI_API }}" || process.env.OBI_URL; //https://api.live.app.obi.de/v1/stores/
     const proxyUrl = 'https://proxy.cors.sh/';
     
     console.log(`OBI_URL V2: ${OBI_URL}`);
