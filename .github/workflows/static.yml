@@ -29,10 +29,10 @@ jobs:
         uses: actions/checkout@v4
       - name: Replace placeholder with OBIAPI
         run: |
-          sed -i "s/{{ OBI_API }}/$OBI_API/g" script.js
+          sed -i "s|{{ OBI_API }}|$OBI_API|g" script.js
       - name: Replace placeholder with PROXYAPIKEY
         run: |
-          sed -i "s/{{ PROXY_API_KEY }}/$PROXY_API_KEY/g" script.js
+          sed -i "s|{{ PROXY_API_KEY }}|$PROXY_API_KEY|g" script.js
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
