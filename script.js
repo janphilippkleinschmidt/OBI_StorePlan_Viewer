@@ -92,7 +92,7 @@ document.getElementById('marketForm').addEventListener('submit', async function(
         const section1Var = doc.querySelector('g[id="-1"]');
         
         updateStatus('Erstelle separate SVG-Dokumente...');
-        const createSectionSVG = (sectionContent) => {
+        const createSectionSVG = (sectionId, sectionContent) => {
             return `
                 <?xml version="1.0" encoding="utf-8"?>
                 <svg width="100%" height="auto" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -140,8 +140,8 @@ document.getElementById('marketForm').addEventListener('submit', async function(
             const section0Content = getCompleteSectionContent(section0);
             
             updateStatus('Erstelle Ansicht-Links...');
-            const section1SVG = createSectionSVG(section1Content);
-            const section0SVG = createSectionSVG(section0Content);
+            const section1SVG = createSectionSVG('1', section1Content);
+            const section0SVG = createSectionSVG('0', section0Content);
             
             updateStatus('Erstelle Download-Links...');
             const blob1 = new Blob([section1SVG], { type: 'text/html' });

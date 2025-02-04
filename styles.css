@@ -10,13 +10,12 @@
 }
 
 #site-logo {
-    max-width: 200px; /* Anpassen Sie diese Größe nach Bedarf */
+    max-width: 200px;
     height: auto;
     margin: 20px auto;
     display: block;
 }
 
-/* Optional: Responsive Design */
 @media (max-width: 768px) {
     #site-logo {
         max-width: 150px;
@@ -101,9 +100,11 @@ button:hover {
     border-radius: 4px;
     cursor: pointer;
     display: block;
-    margin-top: 10px;
-    width: 100%;
+    max-width: 100%;
     box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .view-btn:hover {
