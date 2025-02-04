@@ -6,12 +6,15 @@ document.getElementById('marketForm').addEventListener('submit', async function(
     const downloadButton = document.getElementById('downloadButton');
     const submitButton = document.querySelector('#marketForm button[type="submit"]');
     const submitButtonElement = document.getElementById('submitbutton');
-    const proxyApiKey = 'temp_9514f88443496c1b6dcb49cc651b3aa4' || process.env.PROXY_API_KEY;
+    const PROXY_API_KEY = "{{ PROXY_API_KEY }}"; //temp_9514f88443496c1b6dcb49cc651b3aa4
+    const OBI_URL = "{{ OBI_API }}"; //https://api.live.app.obi.de/v1/stores/
     const proxyUrl = 'https://proxy.cors.sh/';
-    const baseURL = 'https://api.live.app.obi.de/v1/stores/';
-
-    var storename = '';
     
+    console.log(`OBI_URL V2: ${OBI_URL}`);
+    console.log(`PROXY_API_KEY V2: ${PROXY_API_KEY}`);
+    
+    var storename = '';
+
     // Status-Bereich initialisieren
     const statusDiv = document.querySelector('.status-content');
     function updateStatus(message, type = 'loading') {
@@ -56,12 +59,12 @@ document.getElementById('marketForm').addEventListener('submit', async function(
 
         updateStatus('API-Anfrage wird vorbereitet...');
         
-        const apiUrl = `${proxyUrl}${baseURL}${marktNumber}?country=${email.slice(-2)}`;
+        const apiUrl = `${proxyUrl}${OBI_URL}${marktNumber}?country=${email.slice(-2)}`;
         const options = {
             method: 'GET',
             headers: {
                 'Accept': 'image/vnd.obi.companion.store.svg+xml;version=1',
-                'x-cors-api-key': proxyApiKey
+                'x-cors-api-key': PROXY_API_KEY
             },
         };
         
@@ -69,7 +72,7 @@ document.getElementById('marketForm').addEventListener('submit', async function(
         const response = await fetch(apiUrl, options);
         
         if (!response.ok) {
-            throw new Error(`API Fehler: ${response.status}`);
+            throw new Error(`API Fehler: ${response.status}. Bitte versuche es in ein paar Minuten erneut`);
         }
         
         updateStatus('API-Antwort erhalten...');
@@ -177,6 +180,7 @@ document.getElementById('marketForm').addEventListener('submit', async function(
             
             updateStatus('Konfiguriere Download-Funktion...');
             downloadButton.onclick = () => {
+                updateStatus('Starte Download-Vorgang...');
                 const downloadSection = (sectionId, sectionContent) => {
                     const sectionSVG = createSectionSVG(sectionId, sectionContent);
                     const blob = new Blob([sectionSVG], { type: 'text/html' });
@@ -188,9 +192,9 @@ document.getElementById('marketForm').addEventListener('submit', async function(
                     URL.revokeObjectURL(url);
                 };
                 
-                updateStatus('Starte Download-Vorgang...');
                 downloadSection('1', section1Content);
                 downloadSection('0', section0Content);
+                updateStatus('Download abgeschlossen: ', 'success');
             };
             
             updateStatus('Fertig! Markplan mit mehreren Stockwerken verfügbar: ', 'success');
@@ -220,6 +224,7 @@ document.getElementById('marketForm').addEventListener('submit', async function(
             
             updateStatus('Konfiguriere Download-Funktion...');
             downloadButton.onclick = () => {
+                updateStatus('Starte Download-Vorgang...');
                 const downloadFile = () => {
                     const blob = new Blob([sectionSVG], { type: 'text/html' });
                     const url = URL.createObjectURL(blob);
@@ -230,8 +235,8 @@ document.getElementById('marketForm').addEventListener('submit', async function(
                     URL.revokeObjectURL(url);
                 };
                 
-                updateStatus('Starte Download-Vorgang...');
                 downloadFile();
+                updateStatus('Download abgeschlossen: ', 'success');
             };
             
             updateStatus('Fertig! Markplan verfügbar: ', 'success');
