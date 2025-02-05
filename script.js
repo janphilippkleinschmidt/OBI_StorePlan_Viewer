@@ -51,7 +51,9 @@ document.getElementById('marketForm').addEventListener('submit', async function(
     
     // Reset downloadbutton state
     downloadButton.style.display = 'none';
-    
+    const existingViewButtons = document.querySelectorAll('.view-buttons-container');
+    existingViewButtons.forEach(button => button.remove());
+
     try {
         submitButtonElement.disabled = true;
         submitButton.classList.add('disabled-button');
