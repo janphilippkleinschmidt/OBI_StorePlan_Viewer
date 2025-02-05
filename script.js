@@ -1,9 +1,9 @@
 document.getElementById('marketForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    const marktNumber = document.getElementById('marktNumber').value;
-    const email = document.getElementById('email').value;
-    const downloadButton = document.getElementById('downloadButton');
+    const marktNumber = document.getElementById('marktNumber').value; //userinput "Marktnummer"
+    const email = document.getElementById('email').value; //userinput "E-Mail Adresse"
+    // const downloadButton = document.getElementById('downloadButton');
     const submitButton = document.querySelector('#marketForm button[type="submit"]');
     const submitButtonElement = document.getElementById('submitbutton');
 
@@ -13,9 +13,7 @@ document.getElementById('marketForm').addEventListener('submit', async function(
     const proxyUrl = 'https://proxy.cors.sh/';
 
     var storename = '';
-
-    // Status-Bereich initialisieren
-    const statusDiv = document.querySelector('.status-content');
+    
     function updateStatus(message, type = 'loading') {
         const statusDiv = document.querySelector('.status-content');
         statusDiv.innerHTML = ''; // Lösche vorherigen Status
@@ -38,7 +36,6 @@ document.getElementById('marketForm').addEventListener('submit', async function(
         statusDiv.appendChild(statusStep);
         statusDiv.scrollTop = statusDiv.scrollHeight;
         
-        // Deaktiviere den Lade-Spinner bei Erfolg
         if (type === 'success') {
             const statusSpinner = statusDiv.querySelector('.status-step');
             if (statusSpinner) {
@@ -49,8 +46,7 @@ document.getElementById('marketForm').addEventListener('submit', async function(
 
     updateStatus('Starte Marktplan-Anfrage...');
     
-    // Reset downloadbutton state
-    downloadButton.style.display = 'none';
+    //downloadButton.style.display = 'none'; // Reset downloadbutton state
     const existingViewButtons = document.querySelectorAll('.view-buttons-container');
     existingViewButtons.forEach(button => button.remove());
 
@@ -69,14 +65,14 @@ document.getElementById('marketForm').addEventListener('submit', async function(
             },
         };
         
-        updateStatus('Warte auf API-Antwort...');
+        updateStatus('Marktplan wird angefordert...'); //Warte auf API-Antwort..
         const response = await fetch(apiUrl, options);
         
         if (!response.ok) {
             throw new Error(`API Fehler: ${response.status}. Bitte versuche es in ein paar Minuten erneut`);
         }
         
-        updateStatus('API-Antwort erhalten...');
+        updateStatus('Marktplan erhalten...'); //API-Antwort erhalten...
         const svgText = await response.text();
         console.log('Received SVG:', svgText.slice(0, 100));
         
@@ -132,13 +128,13 @@ document.getElementById('marketForm').addEventListener('submit', async function(
         const existingViewButtons = document.querySelectorAll('.view-buttons-container');
         existingViewButtons.forEach(button => button.remove());
 
-        document.querySelector('.download-options').removeAttribute('style');
-        document.getElementById('downloadButton').removeAttribute('style');
-        document.querySelector('.download-options').style.display = 'block';
-        document.getElementById('downloadButton').style.display = 'block';
+        // document.querySelector('.download-options').removeAttribute('style');
+        // document.getElementById('downloadButton').removeAttribute('style');
+        // document.querySelector('.download-options').style.display = 'block';
+        // document.getElementById('downloadButton').style.display = 'block';
         
-        // Mehrere Etagen verfügbar
-        if ((section1 || section1Var) && section0) {
+        
+        if ((section1 || section1Var) && section0) { // Mehrere Etagen gefunden
             
             const section1Content = section1 ? getCompleteSectionContent(section1) : getCompleteSectionContent(section1Var);
             const section0Content = getCompleteSectionContent(section0);
@@ -168,7 +164,7 @@ document.getElementById('marketForm').addEventListener('submit', async function(
                 `;
             }
             
-            document.querySelector('.download-options').before(viewButtonsContainer);
+            document.querySelector('.button-container').append(viewButtonsContainer);
             
             updateStatus('Füge Event-Listener hinzu...');
             document.getElementById('viewSection1').addEventListener('click', () => {
@@ -179,28 +175,28 @@ document.getElementById('marketForm').addEventListener('submit', async function(
                 window.open(url0, '_blank');
             });
             
-            updateStatus('Konfiguriere Download-Funktion...');
-            downloadButton.onclick = () => {
-                updateStatus('Starte Download-Vorgang...');
-                const downloadSection = (sectionId, sectionContent) => {
-                    const sectionSVG = createSectionSVG(sectionId, sectionContent);
-                    const blob = new Blob([sectionSVG], { type: 'text/html' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `Marktplan-${marktNumber}-Etage-${sectionId}.html`;
-                    a.click();
-                    URL.revokeObjectURL(url);
-                };
+            // updateStatus('Konfiguriere Download-Funktion...');
+            // downloadButton.onclick = () => {
+            //     updateStatus('Starte Download-Vorgang...');
+            //     const downloadSection = (sectionId, sectionContent) => {
+            //         const sectionSVG = createSectionSVG(sectionId, sectionContent);
+            //         const blob = new Blob([sectionSVG], { type: 'text/html' });
+            //         const url = URL.createObjectURL(blob);
+            //         const a = document.createElement('a');
+            //         a.href = url;
+            //         a.download = `Marktplan-${marktNumber}-Etage-${sectionId}.html`;
+            //         a.click();
+            //         URL.revokeObjectURL(url);
+            //     };
                 
-                downloadSection('1', section1Content);
-                downloadSection('0', section0Content);
-                updateStatus('Download abgeschlossen: ', 'success');
-            };
+            //     downloadSection('1', section1Content);
+            //     downloadSection('0', section0Content);
+            //     updateStatus('Download abgeschlossen: ', 'success');
+            // };
             
             updateStatus('Fertig! Markplan mit mehreren Stockwerken verfügbar: ', 'success');
             
-        } else { // Einzelne Ebene
+        } else { // Eine Etage gefunden
 
             const sectionContent = getCompleteSectionContent(doc);
 
@@ -216,29 +212,29 @@ document.getElementById('marketForm').addEventListener('submit', async function(
                 <button id="viewPlan" class="view-btn">Marktplan anzeigen</button>
             `;
             
-            document.querySelector('.download-options').before(viewButtonsContainer);
+            document.querySelector('.button-container').append(viewButtonsContainer);
             
             updateStatus('Füge Event-Listener hinzu...');
             document.getElementById('viewPlan').addEventListener('click', () => {
                 window.open(url, '_blank');
             });
             
-            updateStatus('Konfiguriere Download-Funktion...');
-            downloadButton.onclick = () => {
-                updateStatus('Starte Download-Vorgang...');
-                const downloadFile = () => {
-                    const blob = new Blob([sectionSVG], { type: 'text/html' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `Marktplan-${marktNumber}.html`;
-                    a.click();
-                    URL.revokeObjectURL(url);
-                };
+            // updateStatus('Konfiguriere Download-Funktion...');
+            // downloadButton.onclick = () => {
+            //     updateStatus('Starte Download-Vorgang...');
+            //     const downloadFile = () => {
+            //         const blob = new Blob([sectionSVG], { type: 'text/html' });
+            //         const url = URL.createObjectURL(blob);
+            //         const a = document.createElement('a');
+            //         a.href = url;
+            //         a.download = `Marktplan-${marktNumber}.html`;
+            //         a.click();
+            //         URL.revokeObjectURL(url);
+            //     };
                 
-                downloadFile();
-                updateStatus('Download abgeschlossen: ', 'success');
-            };
+            //     downloadFile();
+            //     updateStatus('Download abgeschlossen: ', 'success');
+            // };
             
             updateStatus('Fertig! Markplan verfügbar: ', 'success');
         }

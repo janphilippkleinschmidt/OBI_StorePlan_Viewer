@@ -22,23 +22,33 @@
             <input type="email" id="email" name="email" required pattern="^[^@]+@(?:obi\.)?(?:de|at)$">
         </div>
         <div class="button-container">
-            <button type="submit" id="submitbutton">Daten Absenden </button>
+            <button type="submit" id="submitbutton">Daten absenden</button>
         </div>
-        <div class="download-options" style="display: none;">
+        <!-- <div class="download-options" style="display: none;">
             <button type="button" id="downloadButton" class="download-btn">Marktplan Herunterladen</button>
-        </div>
+        </div> -->
     </form>
     <div id="status-message" class="status-message">
         <div class="status-content"></div>
     </div>
     <div class="report-changes-container">
         <a target="_blank" rel="noopener noreferrer" href="{{ FORM_LINK }}" class="report-changes-link">
-            <button class="report-changes-btn">
-                Änderungen im heyOBI Marktplan melden
-            </button>
+            <button class="report-changes-btn">Änderungen am heyOBI Marktplan melden</button>
         </a>
     </div>
 </div>
     <script src="script.js"></script>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="https://www.obi.de" target="_blank" rel="noopener noreferrer" class="footer-link">OBI</a>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/janphilippkleinschmidt/OBI_StorePlan_Viewer" target="_blank" rel="noopener noreferrer" class="footer-link-two">GitHub Repository</a>
+                </div>
+            </div>
+        </div>        
+    </footer>
 </body>
 </html>

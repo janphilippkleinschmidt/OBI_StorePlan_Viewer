@@ -1,8 +1,17 @@
+@font-face {
+    font-family: 'OBI-Font';
+    src: url('fonts/ObiSans-Bold.ttf') format('truetype'),
+         url('fonts/ObiSans-Bold.woff') format('woff'),
+         url('fonts/ObiSans-Bold.woff2') format('woff2');
+         
+}
+
 .container {
     max-width: 600px;
     margin: 20px auto;
     padding: 20px;
-    font-family: Arial, sans-serif;
+    font-family: 'OBI-Font', Arial, sans-serif;
+    font-size: 20px;
 }
 .logo-container {
     text-align: center;
@@ -23,6 +32,7 @@
 }
 
 .form-group {
+    font-family: 'OBI-Font', Arial, sans-serif;
     margin-bottom: 15px;
 }
 
@@ -49,6 +59,8 @@ input[type="email"] {
 }
 
 button {
+    font-family: 'OBI-Font', Times, serif; 
+    font-size: 20px; 
     background-color: #FF6600;
     color: white;
     padding: 10px 20px;
@@ -61,7 +73,7 @@ button:hover {
     background-color: #CC5500;
 }
 
-#downloadButton {
+/* #downloadButton {
     padding: 8px 16px;
     background-color: #FF6600;
     color: white;
@@ -71,9 +83,25 @@ button:hover {
     display: block;
     margin-top: 20px;
     margin-bottom: 20px;
-}
+} */
 
-#downloadButton:hover {
+/* #downloadButton:hover {
+    background-color: #CC5500;
+} */
+
+#viewPlan {
+    background-color: #FF6600;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+} 
+
+#viewPlan:hover {
     background-color: #CC5500;
 }
 
@@ -195,10 +223,66 @@ button:hover {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
+    font-family: 'OBI-Font', Times, serif; 
+    font-size: 20px; 
     transition: background-color 0.3s ease;
 }
 
 .report-changes-btn:hover {
     background-color: #CC5500;
+}
+
+.footer-container {
+    font-family: 'OBI-Font', Arial, sans-serif;
+    background-color: #f8f9fa;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 4px;
+}
+
+.footer-content {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-link {
+    color: #FF6600;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: #CC5500;
+}
+
+.footer-link-two {
+    color: #666;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.footer-link-two:hover {
+    color: #8921ff;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .footer-links {
+        justify-content: center;
+    }
 }
