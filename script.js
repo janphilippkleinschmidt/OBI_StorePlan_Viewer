@@ -1,23 +1,16 @@
 document.getElementById('marketForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    
+
     const marktNumber = document.getElementById('marktNumber').value;
     const email = document.getElementById('email').value;
     const downloadButton = document.getElementById('downloadButton');
     const submitButton = document.querySelector('#marketForm button[type="submit"]');
     const submitButtonElement = document.getElementById('submitbutton');
-    var PROXY_API_KEY = "{{ PROXY_API_KEY }}" || process.env.PROXY_API_KEY; //temp_9514f88443496c1b6dcb49cc651b3aa4
-    var OBI_URL = "{{ OBI_API }}" || process.env.OBI_URL; //https://api.live.app.obi.de/v1/stores/
+
+    const PROXY_API_KEY = "{{ PROXY_API_KEY }}";
+    const OBI_URL = "{{ OBI_API }}";
+
     const proxyUrl = 'https://proxy.cors.sh/';
-    
-    console.log(`OBI_URL V1: ${OBI_URL}`);
-    console.log(`PROXY_API_KEY V1: ${PROXY_API_KEY}`);
-
-    if(OBI_URL == "{{ OBI_API }}") {OBI_URL = 'https://api.live.app.obi.de/v1/stores/'};
-    if(PROXY_API_KEY == "{{ PROXY_API_KEY }}") {PROXY_API_KEY = 'temp_9514f88443496c1b6dcb49cc651b3aa4'};
-
-    console.log(`OBI_URL V2: ${OBI_URL}`);
-    console.log(`PROXY_API_KEY V2: ${PROXY_API_KEY}`);
 
     var storename = '';
 
@@ -104,7 +97,7 @@ document.getElementById('marketForm').addEventListener('submit', async function(
         const createSectionSVG = (sectionId, sectionContent) => {
             return `
                 <?xml version="1.0" encoding="utf-8"?>
-                <svg width="100%" height="auto" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                <svg width="2000px" height="2000px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                 viewBox="0 0 3000 3000" preserveAspectRatio="xMidYMid meet" enable-background="new 0 0 3000 2000" xml:space="preserve">
                 ${sectionContent}
                 </svg>
