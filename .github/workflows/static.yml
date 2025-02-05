@@ -8,6 +8,7 @@ on:
 env:
   PROXY_API_KEY: ${{ secrets.PROXY_API_KEY }}
   OBI_API: ${{ secrets.OBI_API }}
+  FORM_LINK: ${{ secrets.FORM_LINK }}
 
 permissions:
   contents: read
@@ -33,6 +34,9 @@ jobs:
       - name: Replace placeholder with PROXYAPIKEY
         run: |
           sed -i "s|{{ PROXY_API_KEY }}|$PROXY_API_KEY|g" script.js
+      - name: Replace placeholder with FormLINK
+        run: |
+          sed -i "s|{{ FORM_LINK }}|$FORM_LINK|g" index.html
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
