@@ -113,6 +113,38 @@ button:hover {
     background-color: #CC5500;
 }
 
+#viewSection0 {
+    background-color: #FF6600;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#viewSection0:hover {
+    background-color: #CC5500;
+}
+
+#viewSection1 {
+    background-color: #FF6600;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+} 
+
+#viewSection1:hover {
+    background-color: #CC5500;
+}
+
 .button-container {
     position: relative;
     margin-bottom: 20px;
@@ -145,7 +177,7 @@ button:hover {
 }
 
 .view-btn:hover {
-    background-color: #CC5500;
+    background-color: #0a00cc;
 }
 
 @media (min-width: 600px) {
