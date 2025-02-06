@@ -32,8 +32,16 @@
 }
 
 .form-group {
+    color: #007bff;
     font-family: 'OBI-Font', Arial, sans-serif;
     margin-bottom: 15px;
+}
+
+#marktNumber::placeholder {
+    color: #007bff98;
+}
+#email::placeholder {
+    color: #007bff98;
 }
 
 input:invalid {

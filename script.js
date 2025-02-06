@@ -69,7 +69,11 @@ document.getElementById('marketForm').addEventListener('submit', async function(
         const response = await fetch(apiUrl, options);
         
         if (!response.ok) {
-            throw new Error(`API Fehler: ${response.status}. Bitte versuche es in ein paar Minuten erneut`);
+            if (response.status === 404) {
+                throw new Error(`API Fehler: ${response.status}. Der Marktplan zu der angegebenen Marktnummer konnte nicht gefunden werden`);
+            } else {
+                throw new Error(`API Fehler: ${response.status}.`);
+            }
         }
         
         updateStatus('Marktplan erhalten...'); //API-Antwort erhalten...
@@ -240,7 +244,12 @@ document.getElementById('marketForm').addEventListener('submit', async function(
         }
         
     } catch (error) {
-        updateStatus(`Fehler aufgetreten: ${error.message}. Bitte versuche es in ein paar Minuten erneut`, 'error');
+        if (error.message.includes("404")) {
+            updateStatus(`Fehler aufgetreten: ${error.message}.`, 'error');
+        } else {
+            updateStatus(`Fehler aufgetreten: ${error.message}. Bitte versuche es in ein paar Minuten erneut.`, 'error');
+        }
+        
         
         console.error('Request failed:', {
             status: error.status,
