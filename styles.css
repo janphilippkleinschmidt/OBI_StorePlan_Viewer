@@ -45,7 +45,7 @@
 }
 
 input:invalid {
-    border-color: #FF6600;
+    border-color: #F56600;
 }
 
 input:valid {
@@ -62,14 +62,14 @@ input[type="text"],
 input[type="email"] {
     width: 100%;
     padding: 8px;
-    border: 1px solid #FF6600;
+    border: 1px solid #F56600;
     border-radius: 4px;
 }
 
 button {
     font-family: 'OBI-Font', Times, serif; 
     font-size: 20px; 
-    background-color: #FF6600;
+    background-color: #F56600;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -98,7 +98,7 @@ button:hover {
 } */
 
 #viewPlan {
-    background-color: #FF6600;
+    background-color: #F56600;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -114,7 +114,7 @@ button:hover {
 }
 
 #viewSection0 {
-    background-color: #FF6600;
+    background-color: #F56600;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -130,7 +130,7 @@ button:hover {
 }
 
 #viewSection1 {
-    background-color: #FF6600;
+    background-color: #F56600;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -162,7 +162,7 @@ button:hover {
 }
 
 .view-btn {
-    background-color: #FF6600;
+    background-color: #F56600;
     color: white;
     padding: 8px 16px;
     border: none;
@@ -215,7 +215,7 @@ button:hover {
     width: 20px;
     height: 20px;
     border: 2px solid #f3f3f3;
-    border-top: 2px solid #FF6600;
+    border-top: 2px solid #F56600;
     border-radius: 50%;
     animation: spin 1s linear infinite;
     animation: var(--spinner-animation);
@@ -257,7 +257,7 @@ button:hover {
 }
 
 .report-changes-btn {
-    background-color: #FF6600;
+    background-color: #F56600;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -294,7 +294,7 @@ button:hover {
 }
 
 .footer-link {
-    color: #FF6600;
+    color: #F56600;
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;

@@ -6,6 +6,7 @@ document.getElementById('marketForm').addEventListener('submit', async function(
     // const downloadButton = document.getElementById('downloadButton');
     const submitButton = document.querySelector('#marketForm button[type="submit"]');
     const submitButtonElement = document.getElementById('submitbutton');
+    const FormButton = document.querySelector('.report-changes-container .report-changes-link');
 
     const PROXY_API_KEY = "{{ PROXY_API_KEY }}";
     const OBI_URL = "{{ OBI_API }}";
@@ -13,6 +14,16 @@ document.getElementById('marketForm').addEventListener('submit', async function(
     const proxyUrl = 'https://proxy.cors.sh/';
 
     var storename = '';
+
+    //Custom Forms URL
+    var FormQ1 = marktNumber;
+    var FormQ2 = email;
+    var FormQ3 = '';
+    var FormQ4 = '';
+    var FormBaseURL = `https://docs.google.com/forms/d/e/1FAIpQLSfDlNxdmDdmLCrGu71CuLTMxYXZ7hoRSpO82xuIv5XqEyXOlw/viewform?usp=pp_url&entry.1016517630=${FormQ1}&entry.1540606585=${FormQ2}&entry.1866007651=${FormQ3}&entry.728342376=${FormQ4}`;
+
+    FormButton.href = FormBaseURL;
+
     
     function updateStatus(message, type = 'loading') {
         const statusDiv = document.querySelector('.status-content');
