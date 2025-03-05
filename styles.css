@@ -3,7 +3,6 @@
     src: url('fonts/ObiSans-Bold.ttf') format('truetype'),
          url('fonts/ObiSans-Bold.woff') format('woff'),
          url('fonts/ObiSans-Bold.woff2') format('woff2');
-         
 }
 
 .container {
@@ -40,6 +39,7 @@
 #marktNumber::placeholder {
     color: #007bff98;
 }
+
 #email::placeholder {
     color: #007bff98;
 }
@@ -78,38 +78,6 @@ button {
 }
 
 button:hover {
-    background-color: #CC5500;
-}
-
-/* #downloadButton {
-    padding: 8px 16px;
-    background-color: #FF6600;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    display: block;
-    margin-top: 20px;
-    margin-bottom: 20px;
-} */
-
-/* #downloadButton:hover {
-    background-color: #CC5500;
-} */
-
-#viewPlan {
-    background-color: #F56600;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    display: block;
-    margin-top: 20px;
-    margin-bottom: 20px;
-} 
-
-#viewPlan:hover {
     background-color: #CC5500;
 }
 
@@ -247,6 +215,7 @@ button:hover {
 }
 
 .report-changes-container {
+    display: none;
     text-align: center;
     margin-top: 20px;
     padding: 20px 0;
@@ -274,7 +243,7 @@ button:hover {
 
 .footer-container {
     font-family: 'OBI-Font', Arial, sans-serif;
-    background-color: #f8f9fa;
+    background-color: #cc550024;
     padding: 20px;
     margin-top: 20px;
     border-radius: 4px;
