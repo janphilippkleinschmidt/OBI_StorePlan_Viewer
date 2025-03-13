@@ -154,10 +154,8 @@ document.getElementById('marketForm').addEventListener('submit', async function(
             const storey_EG_SVG = createstorey_SVG('0', storey_EG_Content);
             
             updateStatus('Erstelle Download-Links...');
-            const blob1 = new Blob([storey_OG_UG_SVG], { type: 'text/html' });
-            const url1 = URL.createObjectURL(blob1);
-            const blob0 = new Blob([storey_EG_SVG], { type: 'text/html' });
-            const url0 = URL.createObjectURL(blob0);
+            const base64_SVG_1 = btoa(storey_OG_UG_SVG);
+            const base64_SVG_0 = btoa(storey_EG_SVG);
             
             updateStatus('Erstelle "Anzeigen"-Schaltfläche...');
             const viewButtonsContainer = document.createElement('div');
@@ -178,13 +176,43 @@ document.getElementById('marketForm').addEventListener('submit', async function(
             
             updateStatus('Füge Event-Listener hinzu...');
             document.getElementById('viewSection1').addEventListener('click', () => {
-                window.open(url1, '_blank');
+                const newTab = window.open('_blank');
+                newTab.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                        <head>
+                            <meta charset="UTF-8">
+                            <style>
+                                body { margin: 0; padding: 20px; }
+                                svg { max-width: 100%; height: auto; }
+                            </style>
+                        </head>
+                        <body>
+                            ${atob(base64_SVG_1)}
+                        </body>
+                    </html>
+                `);
 
                 reportChangesContainer.style.display = 'block'; // Show the "Report Changes" button
             });
             
             document.getElementById('viewSection0').addEventListener('click', () => {
-                window.open(url0, '_blank');
+                const newTab = window.open('_blank');
+                newTab.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                        <head>
+                            <meta charset="UTF-8">
+                            <style>
+                                body { margin: 0; padding: 20px; }
+                                svg { max-width: 100%; height: auto; }
+                            </style>
+                        </head>
+                        <body>
+                            ${atob(base64_SVG_0)}
+                        </body>
+                    </html>
+                `);
 
                 reportChangesContainer.style.display = 'block'; // Show the "Report Changes" button
             });
@@ -192,35 +220,44 @@ document.getElementById('marketForm').addEventListener('submit', async function(
             updateStatus('Fertig! Markplan mit mehreren Stockwerken verfügbar: ', 'success');
             
         } else { // found one storey
-
             const storey_Content = getCompletestorey_Content(doc);
+            const storey_SVG = createstorey_SVG('0', storey_Content);
+            const base64_SVG = btoa(storey_SVG);
 
-            const storey_SVG = createstorey_SVG('0',storey_Content);
-            
-            const blob = new Blob([storey_SVG], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            
             updateStatus('Erstelle "Anzeigen"-Schaltfläche...');
             const viewButtonsContainer = document.createElement('div');
             viewButtonsContainer.className = 'view-buttons-container';
             viewButtonsContainer.innerHTML = `
-                <button id="viewSection1" class="view-btn">Marktplan anzeigen</button>
+            <button id="viewSection1" class="view-btn">Marktplan anzeigen</button>
             `;
-            
             document.querySelector('.button-container').append(viewButtonsContainer);
-            
+
             updateStatus('Füge Event-Listener hinzu...');
             document.getElementById('viewSection1').addEventListener('click', () => {
-                window.open(url, '_blank');
-
-                reportChangesContainer.style.display = 'block'; // Show the "Report Changes" button
+                const newTab = window.open('_blank');
+                newTab.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                        <head>
+                            <meta charset="UTF-8">
+                            <style>
+                                body { margin: 0; padding: 20px; }
+                                svg { max-width: 100%; height: auto; }
+                            </style>
+                        </head>
+                        <body>
+                            ${atob(base64_SVG)}
+                        </body>
+                    </html>
+                `);
+                
+                reportChangesContainer.style.display = 'block';
             });
-            
+
             updateStatus('Fertig! Markplan verfügbar: ', 'success');
         }
-        
     } catch (error) {
-        if (error.message.includes("404")) { //404 indicates that the combination of the storen umber and the country code dont match
+        if (error.message.includes("404")) { //404 indicates that the combination of the storen number and the country code dont match
             updateStatus(`Fehler aufgetreten: ${error.message}.`, 'error');
         } else {
             updateStatus(`Fehler aufgetreten: ${error.message}. Bitte versuche es in ein paar Minuten erneut.`, 'error');
