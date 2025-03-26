@@ -154,8 +154,18 @@ document.getElementById('marketForm').addEventListener('submit', async function(
             const storey_EG_SVG = createstorey_SVG('0', storey_EG_Content);
             
             updateStatus('Erstelle Download-Links...');
-            const base64_SVG_1 = btoa(storey_OG_UG_SVG);
-            const base64_SVG_0 = btoa(storey_EG_SVG);
+            function encodeSVG(svgString) {
+                return btoa(unescape(encodeURIComponent(svgString)));
+            }
+            
+            function decodeSVG(base64String) {
+                return decodeURIComponent(escape(atob(base64String)));
+            }
+
+            const base64_SVG_1 = encodeSVG(storey_OG_UG_SVG);
+            const base64_SVG_0 = encodeSVG(storey_EG_SVG);
+            //const base64_SVG_1 = btoa(storey_OG_UG_SVG);
+            //const base64_SVG_0 = btoa(storey_EG_SVG);
             
             updateStatus('Erstelle "Anzeigen"-Schaltfläche...');
             const viewButtonsContainer = document.createElement('div');
@@ -188,7 +198,7 @@ document.getElementById('marketForm').addEventListener('submit', async function(
                             </style>
                         </head>
                         <body>
-                            ${atob(base64_SVG_1)}
+                            ${decodeSVG(base64_SVG_1)}
                         </body>
                     </html>
                 `);
@@ -209,7 +219,7 @@ document.getElementById('marketForm').addEventListener('submit', async function(
                             </style>
                         </head>
                         <body>
-                            ${atob(base64_SVG_0)}
+                        ${decodeSVG(base64_SVG_0)}
                         </body>
                     </html>
                 `);
@@ -222,7 +232,17 @@ document.getElementById('marketForm').addEventListener('submit', async function(
         } else { // found one storey
             const storey_Content = getCompletestorey_Content(doc);
             const storey_SVG = createstorey_SVG('0', storey_Content);
-            const base64_SVG = btoa(storey_SVG);
+
+            updateStatus('Erstelle Download-Links...');
+            function encodeSVG(svgString) {
+                return btoa(unescape(encodeURIComponent(svgString)));
+            }
+            
+            function decodeSVG(base64String) {
+                return decodeURIComponent(escape(atob(base64String)));
+            }
+            const base64_SVG = encodeSVG(storey_SVG);
+            //const base64_SVG = btoa(storey_SVG);
 
             updateStatus('Erstelle "Anzeigen"-Schaltfläche...');
             const viewButtonsContainer = document.createElement('div');
@@ -246,7 +266,7 @@ document.getElementById('marketForm').addEventListener('submit', async function(
                             </style>
                         </head>
                         <body>
-                            ${atob(base64_SVG)}
+                        ${decodeSVG(base64_SVG)}
                         </body>
                     </html>
                 `);
