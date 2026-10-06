@@ -8,10 +8,7 @@ document.getElementById('marketForm').addEventListener('submit', async function(
     const FormButton = document.querySelector('.report-changes-container .report-changes-link');
     const reportChangesContainer = document.querySelector('.report-changes-container');
 
-    const PROXY_API_KEY = "{{ PROXY_API_KEY }}";
-    const OBI_URL = "{{ OBI_API }}";
-
-    const proxyUrl = 'https://proxy.cors.sh/';
+    const OBI_URL = 'https://api.live.app.obi.de/v1/stores/';
 
     var storename = '';
     
@@ -68,18 +65,17 @@ document.getElementById('marketForm').addEventListener('submit', async function(
         submitButton.classList.add('disabled-button');
 
         updateStatus('API-Anfrage wird vorbereitet...');
-        
-        const apiUrl = `${proxyUrl}${OBI_URL}${marktNumber}?country=${email.slice(-2)}`;
+
+        const apiUrl = `${OBI_URL}${marktNumber}?country=${email.slice(-2)}`;
         const options = {
             method: 'GET',
             headers: {
-                'Accept': 'image/vnd.obi.companion.store.svg+xml;version=1',
-                'x-cors-api-key': PROXY_API_KEY
+                'Accept': 'image/vnd.obi.companion.store.svg+xml;version=1'
             },
         };
-        
+
         updateStatus('Marktplan wird angefordert...'); //Waiting for API response...
-        const response = await fetch(apiUrl, options);
+        const response = await corsfix.fetch(apiUrl, options); //proxied via the Corsfix free tier
         
         if (!response.ok) {
             if (response.status === 404) {
@@ -277,13 +273,17 @@ document.getElementById('marketForm').addEventListener('submit', async function(
             updateStatus('Fertig! Markplan verfügbar: ', 'success');
         }
     } catch (error) {
-        if (error.message.includes("404")) { //404 indicates that the combination of the storen number and the country code dont match
-            updateStatus(`Fehler aufgetreten: ${error.message}.`, 'error');
+        //the proxy reports its own problems (Kontingent, Rate-Limit) in ifYouAreUser
+        const message = error.ifYouAreUser || error.message;
+
+        if (message.includes("404")) { //404 indicates that the combination of the storen number and the country code dont match
+            updateStatus(`Fehler aufgetreten: ${message}.`, 'error');
         } else {
-            updateStatus(`Fehler aufgetreten: ${error.message}. Bitte versuche es in ein paar Minuten erneut.`, 'error');
+            updateStatus(`Fehler aufgetreten: ${message}. Bitte versuche es in ein paar Minuten erneut.`, 'error');
         }
-        
+
         console.error('Request failed:', {
+            code: error.code,
             status: error.status,
             message: error.message,
             url: error.url
